@@ -18,17 +18,18 @@ There are no tests, linter, or formatter configured.
 
 ## Architecture
 
-This is essentially a static HTML page wrapped in Astro, not an idiomatic component-based Astro site:
+Idiomatic component-based Astro. The page was rebuilt from the Stitch export into the **Field Protocol** design system (refined Brutalist: parchment + black ink + industrial orange, hard edges, no radius/shadow/blur).
 
-- **`src/pages/index.astro`** is the entire site. It contains a full standalone `<html>` document (its own `<head>`/`<body>`) — it does **not** use `src/layouts/Layout.astro`. Editing the portfolio means editing this one file.
-- **`src/layouts/Layout.astro`** exists (boilerplate `title` prop layout) but is currently unused. Wire it in only if refactoring toward a normal Astro structure.
-- **Styling is Tailwind via inline `<script id="tailwind-config">`** inside `index.astro` (the Stitch CDN-style setup), *not* a Tailwind/PostCSS build. A large custom design-token theme (Material-style color roles like `surface-container-*`, `on-surface`, `secondary`; custom fonts `headline-lg`, `body-md`, `display-vertical`; custom spacing like `spine-width`) is defined there. The aesthetic is "practitioner-grade minimalist brutalism" (`brutal-border`, scanline hover animations).
-- **`public/assets/`** holds the exported CSS/JS/PNG referenced by hashed filenames (e.g. `/assets/<hash>.css`). These are now plain static assets — edit/replace them directly. (The former `.stitch-mcp/` sync cache has been removed.)
-- **Interactivity** is plain inline `<script>` in `index.astro`: `openModal(company, phase, description)` / `closeModal()` drive the project detail modal, triggered by `onclick` on matrix cells.
+- **`src/styles/global.css`** is the single source of styling — no Tailwind, no framework. `:root` holds all design tokens (surface scale, `--ink`/`--parchment`/`--orange`/`--faded`/`--rule` aliases). Reuse the `.type-*` utility classes (`type-display-vertical`, `type-headline-lg/md`, `type-body-md/sm`, `type-label-caps`, `type-margin-note`) rather than inventing new font rules. Fonts (Inter 400/700/900 + Courier Prime) load via `@import` at the top. Hard rules enforced globally: `border-radius: 0`, no shadows, no blur.
+- **`src/pages/index.astro`** composes the page via `Layout` + components; it holds only the hero, bio strip, and footer markup plus the 3-column research-journal grid (`.layout` → spine 15vw / `.body` → per-section `55fr 30fr` content+margin).
+- **`src/components/`** — `Spine.astro` (rotated site title), `Ruler.astro` (section separator), `Matrix.astro` (renders the 12×3 grid + coverage column + legend from data), `Modal.astro` (markup + the client `<script>` driving the popup).
+- **`src/data/matrixData.js`** is the content source of truth: `phases` (12), `companies` (3), `statusMap` (authoritative active/partial/inactive per cell), `cellContent` (modal copy), and helpers `getCell` / `getAllCells` / `getCoverage`. **Edit portfolio content here, not in markup.**
+- **`src/lib/`** — `fetchCellData.js` (data-source switch via `USE_SUPABASE`, currently mock) and `supabase.js` (env-var client **stub**, intentionally inert; uses a variable-specifier dynamic import so the build doesn't require `@supabase/supabase-js` yet). Supabase wiring is a planned follow-up step.
+- **`public/assets/`** holds only `project-visual.png` (the modal placeholder image, used until Supabase image storage is wired).
 
 ### The lifecycle matrix (core content)
 
-The centerpiece is the "Engineering Lifecycle Matrix": companies (Tenaris, Thermo Fisher, Alstom) as rows × 10 engineering phases (P1 Requirements → P10 End of Life) as columns. Cells are hardcoded `<div>`s — `●` = active lead/E2E, `◐` = partial/support, empty/`opacity-50` = none — each active cell calls `openModal(...)` with its content. To change portfolio content, edit these grid cells directly.
+The centerpiece is the "Engineering Lifecycle Matrix": companies (rows) × **12** lifecycle phases (P1, P2, P3a, P3b, P3c, P4–P10). `Matrix.astro` generates cells from `statusMap`: `active` (orange left border, ● marker, punch-hole black-fill hover), `partial` (dashed border, ◐ marker), `inactive` (blank, non-interactive). Active/partial cells are `<button>`s carrying `data-company`/`data-phase`; clicking one fires a dot animation and opens the modal. `Modal.astro` looks up content from the embedded `getAllCellData()` map, parses `[bracketed]` terms into inline `label-caps` spans, and renders the rotated status stamp.
 
 ## Notes
 

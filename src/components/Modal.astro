@@ -1,0 +1,102 @@
+---
+import { getAllCellData } from '../lib/fetchCellData.js';
+const cells = getAllCellData();
+---
+
+<div class="overlay" id="overlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal__close type-label-caps" id="modal-close" aria-label="Close">×</button>
+
+    <div class="modal__image">
+      <img id="modal-image" src="/assets/project-visual.png" alt="" />
+    </div>
+
+    <div class="modal__content">
+      <p class="modal__eyebrow type-label-caps" id="modal-eyebrow"></p>
+      <h3 class="modal__title type-headline-md" id="modal-title"></h3>
+      <hr class="ruler" aria-hidden="true" />
+      <p class="modal__desc type-body-sm" id="modal-desc"></p>
+      <div class="modal__metrics" id="modal-metrics"></div>
+      <div class="stamp type-label-caps" id="modal-stamp" hidden></div>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ cells }}>
+  const overlay = document.getElementById('overlay');
+  const elEyebrow = document.getElementById('modal-eyebrow');
+  const elTitle = document.getElementById('modal-title');
+  const elDesc = document.getElementById('modal-desc');
+  const elMetrics = document.getElementById('modal-metrics');
+  const elStamp = document.getElementById('modal-stamp');
+  const elImage = document.getElementById('modal-image');
+
+  // Render [bracketed] terms as inline label-caps spans (technical highlight).
+  function renderDescription(text) {
+    return text.replace(/\[([^\]]+)\]/g, '<span class="bracket-term">[$1]</span>');
+  }
+
+  // Wrap the leading numeric token of a metric in Inter 700.
+  function renderMetric(text) {
+    const highlighted = text.replace(
+      /^([±]?[\d.,]+%?|\d+)/,
+      '<span class="metric-num">$1</span>'
+    );
+    return `— ${highlighted}`;
+  }
+
+  function openModal(companyId, phaseCode) {
+    const data = cells[`${companyId}_${phaseCode}`];
+    const company = companyId.charAt(0).toUpperCase() + companyId.slice(1);
+    elEyebrow.textContent = `[${company.toUpperCase()} × ${phaseCode.toUpperCase()}]`;
+
+    if (!data || !data.title) {
+      elTitle.textContent = 'No detail available';
+      elDesc.textContent = 'NO DETAIL AVAILABLE FOR THIS PHASE.';
+      elMetrics.innerHTML = '';
+      elStamp.hidden = true;
+    } else {
+      elTitle.textContent = data.title;
+      elDesc.innerHTML = renderDescription(data.description);
+      elMetrics.innerHTML = (data.metrics || [])
+        .map((m) => `<p class="modal__metric type-body-sm">${renderMetric(m)}</p>`)
+        .join('');
+      if (data.stamp) {
+        elStamp.textContent = `[${data.stamp}]`;
+        elStamp.hidden = false;
+      } else {
+        elStamp.hidden = true;
+      }
+    }
+
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  // Wire cells: tactile dot animation, then open modal.
+  document.querySelectorAll('.cell--active, .cell--partial').forEach((cell) => {
+    cell.addEventListener('click', () => {
+      cell.classList.remove('firing');
+      // reflow to restart the animation
+      void cell.offsetWidth;
+      cell.classList.add('firing');
+      setTimeout(() => cell.classList.remove('firing'), 200);
+      openModal(cell.dataset.company, cell.dataset.phase);
+    });
+  });
+
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeModal();
+  });
+</script>

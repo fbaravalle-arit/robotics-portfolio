@@ -1,499 +1,98 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import Spine from '../components/Spine.astro';
+import Ruler from '../components/Ruler.astro';
+import Matrix from '../components/Matrix.astro';
+import Modal from '../components/Modal.astro';
+import { phases } from '../data/matrixData.js';
 ---
 
-<html class="scroll-smooth" lang="en" style=""><head>
-<meta charset="utf-8" />
-<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-<title>Federico Baravalle - Engineering Portfolio</title>
-<script src="/assets/tailwind.js" is:inline="" />
-<link href="https://fonts.googleapis.com" rel="preconnect" />
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-<link href="/assets/fonts.css" rel="stylesheet" />
-<link href="/assets/material-symbols.css" rel="stylesheet" />
-<script id="tailwind-config">
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        "colors": {
-                "on-primary-fixed-variant": "#474746",
-                "inverse-on-surface": "#f2f0f0",
-                "on-error": "#ffffff",
-                "background": "#fbf9f8",
-                "on-surface-variant": "#444748",
-                "tertiary": "#000000",
-                "on-secondary": "#ffffff",
-                "primary-fixed": "#e5e2e1",
-                "on-secondary-fixed": "#360f00",
-                "surface-container-low": "#f5f3f3",
-                "surface-container-highest": "#e4e2e2",
-                "surface-container": "#efeded",
-                "tertiary-fixed": "#e6e2df",
-                "on-tertiary-fixed": "#1c1b1a",
-                "surface-container-lowest": "#ffffff",
-                "surface-variant": "#e4e2e2",
-                "surface": "#fbf9f8",
-                "secondary-fixed": "#ffdbcd",
-                "on-secondary-container": "#581e00",
-                "outline-variant": "#c4c7c7",
-                "on-surface": "#1b1c1c",
-                "outline": "#747878",
-                "on-error-container": "#93000a",
-                "primary": "#000000",
-                "tertiary-fixed-dim": "#cac6c4",
-                "primary-container": "#1c1b1b",
-                "on-tertiary": "#ffffff",
-                "inverse-primary": "#c8c6c5",
-                "on-secondary-fixed-variant": "#7c2e00",
-                "surface-tint": "#5f5e5e",
-                "error": "#ba1a1a",
-                "on-tertiary-container": "#868382",
-                "on-primary": "#ffffff",
-                "secondary-fixed-dim": "#ffb596",
-                "inverse-surface": "#303031",
-                "secondary": "#a33e00",
-                "primary-fixed-dim": "#c8c6c5",
-                "on-background": "#1b1c1c",
-                "surface-dim": "#dbdad9",
-                "on-primary-fixed": "#1c1b1b",
-                "secondary-container": "#fd6c1a",
-                "on-primary-container": "#858383",
-                "surface-container-high": "#e9e8e7",
-                "error-container": "#ffdad6",
-                "tertiary-container": "#1c1b1a",
-                "on-tertiary-fixed-variant": "#484645",
-                "surface-bright": "#fbf9f8"
-        },
-        "borderRadius": {
-                "DEFAULT": "0.25rem",
-                "lg": "0.5rem",
-                "xl": "0.75rem",
-                "full": "9999px"
-        },
-        "spacing": {
-                "spine-width": "15vw",
-                "margin-width": "30vw",
-                "gutter": "2rem",
-                "unit": "4px",
-                "content-width": "55vw"
-        },
-        "fontFamily": {
-                "margin-note": [
-                        "Courier Prime"
-                ],
-                "headline-lg": [
-                        "Inter"
-                ],
-                "label-caps": [
-                        "Inter"
-                ],
-                "body-sm": [
-                        "Courier Prime"
-                ],
-                "headline-md": [
-                        "Inter"
-                ],
-                "display-vertical": [
-                        "Inter"
-                ],
-                "body-md": [
-                        "Courier Prime"
-                ]
-        },
-        "fontSize": {
-                "margin-note": [
-                        "13px",
-                        {
-                                "lineHeight": "1.4",
-                                "fontWeight": "400"
-                        }
-                ],
-                "headline-lg": [
-                        "48px",
-                        {
-                                "lineHeight": "1.1",
-                                "letterSpacing": "-0.02em",
-                                "fontWeight": "700"
-                        }
-                ],
-                "label-caps": [
-                        "11px",
-                        {
-                                "lineHeight": "1",
-                                "letterSpacing": "0.15em",
-                                "fontWeight": "700"
-                        }
-                ],
-                "body-sm": [
-                        "14px",
-                        {
-                                "lineHeight": "1.5",
-                                "fontWeight": "400"
-                        }
-                ],
-                "headline-md": [
-                        "32px",
-                        {
-                                "lineHeight": "1.2",
-                                "fontWeight": "700"
-                        }
-                ],
-                "display-vertical": [
-                        "84px",
-                        {
-                                "lineHeight": "1",
-                                "letterSpacing": "-0.04em",
-                                "fontWeight": "900"
-                        }
-                ],
-                "body-md": [
-                        "16px",
-                        {
-                                "lineHeight": "1.6",
-                                "fontWeight": "400"
-                        }
-                ]
-        }
-},
-    },
-  }
-</script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .fill-icon {
-            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        
-        /* Custom Scanline Animation for Matrix Cells */
-        @keyframes scanline {
-            0% { top: 0; opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
-        }
-        .matrix-cell-active:hover::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: theme('colors.secondary');
-            animation: scanline 1.5s linear infinite;
-            z-index: 10;
-        }
-        
-        /* Grid System Override */
-        .brutal-border {
-            border: 1px solid theme('colors.outline');
-        }
-        .matrix-scroll-container::-webkit-scrollbar {
-            height: 8px;
-        }
-        .matrix-scroll-container::-webkit-scrollbar-track {
-            background: theme('colors.surface-container-low');
-        }
-        .matrix-scroll-container::-webkit-scrollbar-thumb {
-            background: theme('colors.outline-variant');
-        }
-        
-        body {
-            background-color: theme('colors.background');
-            color: theme('colors.on-background');
-        }
-    </style>
-</head>
-<body class="font-body-md text-body-md antialiased min-h-screen flex" style="overflow: auto;">
-<!-- Left Spine -->
-<aside class="fixed left-0 top-0 w-[15vw] border-r brutal-border bg-surface-container-low z-50 flex flex-col justify-between hidden md:flex mt-[73px] bottom-0">
-<div class="flex flex-col flex-grow divide-y divide-outline">
-<button class="flex-1 bg-surface hover:bg-surface-container transition-colors font-headline-md text-primary p-4 flex items-center justify-center [writing-mode:vertical-rl] rotate-180 tracking-tighter w-full h-full">
-            Mechanical Engineer
-        </button>
-<button class="flex-1 hover:bg-surface-container transition-colors font-headline-md text-outline hover:text-primary p-4 flex items-center justify-center [writing-mode:vertical-rl] rotate-180 tracking-tighter w-full h-full">
-            Technical Program Manager
-        </button>
-<button class="flex-1 hover:bg-surface-container transition-colors font-headline-md text-outline hover:text-primary p-4 flex items-center justify-center [writing-mode:vertical-rl] rotate-180 tracking-tighter w-full h-full">
-            Robotics &amp; Software
-        </button>
-</div>
-</aside>
-<div class="flex-grow flex flex-col min-h-screen w-full">
-<!-- Top Header -->
-<header class="bg-surface border-b brutal-border sticky top-0 z-40 w-full flex justify-between items-center px-4 md:px-10 py-4 z-[100]">
-<h1 class="font-headline-md text-headline-md text-primary font-bold tracking-tighter">Federico Baravalle Portfolio</h1>
-<div class="flex items-center gap-6">
-<a class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1 font-body-sm" href="#">
-<span class="material-symbols-outlined text-2xl">work</span>
-<span class="hidden md:inline">LinkedIn</span>
-</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1 font-body-sm" href="#">
-<span class="material-symbols-outlined text-2xl">code</span>
-<span class="hidden md:inline">GitHub</span>
-</a>
-<button class="bg-primary text-on-primary hover:bg-secondary font-label-caps text-label-caps px-6 py-3 brutal-border transition-colors uppercase rounded">Contact Me</button>
-</div>
-</header>
-<main class="flex-grow flex flex-col md:ml-[15vw]">
-<!-- Hero Section -->
-<section class="relative w-full min-h-[600px] bg-surface-container flex flex-col md:flex-row border-b brutal-border overflow-hidden" id="portfolio">
-<!-- Background Texture Placeholder -->
-<div class="absolute inset-0 bg-cover bg-center opacity-10 z-0" data-alt="A highly technical, blueprint-style schematic background featuring subtle, interconnected geometric lines, circuitry patterns, and precise grid measurements against a warm bone surface container background. The visual style is practitioner-grade minimalist brutalism, with low contrast to ensure text readability." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCqOakW4_BBiffL914zkhHXgCiK0Izk3NL9xQuSUie6rt8jeW21BYaBKFDlKGYYVHv6nX-SRtmR-yvaLIculS3bqzzAAQ-w2nQklDBrKguhmJtcYMBuiI2C8C7CC6-pVph1dRDRYYtDfg3jVKADSjprDqRB8h9NNt6I0QIi6v7I929CNAqlRRQj4MFwWrXPTDX2qu3dzWK55b3dlCWVx-C3zSYKjf2eiGVVpt19hE-q_8xWLJrVX6hQs-pChRZ0xeUm8w-j4WpggTKb')" />
-<div class="relative z-10 flex-grow flex flex-col justify-center px-4 md:px-10 py-16 w-full md:w-2/3 border-r brutal-border">
-<h1 class="font-display-vertical md:font-display-vertical text-display-vertical md:text-display-vertical text-on-surface mb-8">
-                        Engineering, <br />end to end.
-                    </h1>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mb-16 text-lg md:text-xl">
-                        From system requirements to factory floor — across rail, oil &amp; gas, and advanced manufacturing.
-                    </p>
-<div>
-<a class="inline-flex items-center gap-2 bg-secondary text-on-secondary font-label-caps text-label-caps px-8 py-4 brutal-border hover:bg-secondary-container transition-colors uppercase rounded" href="#lifecycle-matrix">
-                            View the lifecycle matrix
-                            <span class="material-symbols-outlined" data-icon="arrow_downward">arrow_downward</span>
-</a>
-</div>
-</div>
-<!-- Right Column - Phase Codes -->
-<div class="relative z-10 hidden md:flex flex-col w-1/3 bg-surface-container-high p-10 overflow-hidden border-l brutal-border">
-<div class="flex flex-col h-full justify-between opacity-60 hover:opacity-100 transition-opacity">
-<div class="font-body-sm text-body-sm text-secondary flex justify-between"><span class="font-bold">P1</span> <span class="">REQUIREMENTS</span></div>
-<div class="font-body-sm text-body-sm text-secondary flex justify-between"><span class="font-bold">P2</span> <span class="">SYSTEM DESIGN</span></div>
-<div class="font-body-sm text-body-sm text-secondary flex justify-between"><span class="font-bold">P3</span> <span class="">DETAILED DESIGN</span></div>
-<div class="font-body-sm text-body-sm text-secondary flex justify-between"><span class="font-bold">P4</span> <span class="">TESTING &amp; VAL</span></div>
-<div class="font-body-sm text-body-sm text-secondary flex justify-between"><span class="font-bold">P5</span> <span class="">INTEGRATION</span></div>
-<div class="font-body-sm text-body-sm text-secondary flex justify-between"><span class="font-bold">P6</span> <span class="">EXECUTION</span></div>
-<div class="font-body-sm text-body-sm text-secondary flex justify-between"><span class="font-bold">P7</span> <span class="">MANUFACTURING</span></div>
-<div class="font-body-sm text-body-sm text-secondary flex justify-between"><span class="font-bold">P8</span> <span class="">OPERATIONS</span></div>
-<div class="font-body-sm text-body-sm text-secondary flex justify-between"><span class="font-bold">P9</span> <span class="">FORECASTING</span></div>
-<div class="font-body-sm text-body-sm text-secondary flex justify-between"><span class="font-bold">P10</span> <span class="">END OF LIFE</span></div>
-</div>
-</div>
-</section>
-<!-- Bio Strip -->
-<section class="bg-surface border-b brutal-border">
-<div class="flex flex-col md:flex-row w-full mx-auto divide-y md:divide-y-0 md:divide-x divide-outline">
-<div class="w-full md:w-1/2 p-4 md:p-10">
-<p class="font-body-md text-body-md text-on-surface leading-relaxed">
-                            I bridge the gap between high-level system architecture and rigorous physical execution. My approach is rooted in technical precision and data-driven methodologies, ensuring robust engineering solutions across complex industrial landscapes. I don't just design; I validate, integrate, and scale.
-                        </p>
-</div>
-<div class="w-full md:w-1/2 p-4 md:p-10 flex flex-col sm:flex-row justify-between items-center gap-4">
-<div class="text-center w-full">
-<div class="font-headline-lg text-headline-lg text-on-surface mb-1">6+</div>
-<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">Years Exp</div>
-</div>
-<div class="text-center w-full border-t sm:border-t-0 sm:border-l border-outline pt-4 sm:pt-0 sm:pl-4">
-<div class="font-headline-lg text-headline-lg text-on-surface mb-1">3</div>
-<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">Industries</div>
-</div>
-<div class="text-center w-full border-t sm:border-t-0 sm:border-l border-outline pt-4 sm:pt-0 sm:pl-4">
-<div class="font-headline-lg text-headline-lg text-on-surface mb-1">10</div>
-<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">Phases</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Engineering Lifecycle Matrix -->
-<section class="bg-surface-container py-16 px-4 md:px-10 border-b brutal-border" id="lifecycle-matrix">
-<div class="w-full">
-<div class="mb-8 flex justify-between items-end">
-<div>
-<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Mechanical Engineering</h2>
-<p class="font-body-md text-body-md text-on-surface-variant">Mechanical Engineering focus and capability map across organizational contexts.</p>
-</div>
-</div>
-<!-- Matrix Container -->
-<div class="matrix-scroll-container overflow-x-auto brutal-border bg-surface-container-low rounded-lg">
-<div class="min-w-[1000px] grid grid-cols-[200px_repeat(10,_minmax(80px,_1fr))]">
-<!-- Header Row -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-high sticky left-0 z-20 rounded-tl-lg">
-<!-- Empty top left cell -->
-</div>
-<!-- Phase Columns Headers -->
-<div class="p-2 border-b border-r brutal-border bg-surface-container-high flex flex-col justify-center items-center text-center">
-<span class="font-body-sm text-body-sm text-secondary">P1</span>
-<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px] uppercase mt-1 hidden lg:block">Reqs</span>
-</div>
-<div class="p-2 border-b border-r brutal-border bg-surface-container-high flex flex-col justify-center items-center text-center">
-<span class="font-body-sm text-body-sm text-secondary">P2</span>
-<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px] uppercase mt-1 hidden lg:block">Sys</span>
-</div>
-<div class="p-2 border-b border-r brutal-border bg-surface-container-high flex flex-col justify-center items-center text-center">
-<span class="font-body-sm text-body-sm text-secondary">P3</span>
-<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px] uppercase mt-1 hidden lg:block">Detail</span>
-</div>
-<div class="p-2 border-b border-r brutal-border bg-surface-container-high flex flex-col justify-center items-center text-center">
-<span class="font-body-sm text-body-sm text-secondary">P4</span>
-<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px] uppercase mt-1 hidden lg:block">Test</span>
-</div>
-<div class="p-2 border-b border-r brutal-border bg-surface-container-high flex flex-col justify-center items-center text-center">
-<span class="font-body-sm text-body-sm text-secondary">P5</span>
-<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px] uppercase mt-1 hidden lg:block">Integ</span>
-</div>
-<div class="p-2 border-b border-r brutal-border bg-surface-container-high flex flex-col justify-center items-center text-center">
-<span class="font-body-sm text-body-sm text-secondary">P6</span>
-<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px] uppercase mt-1 hidden lg:block">Exec</span>
-</div>
-<div class="p-2 border-b border-r brutal-border bg-surface-container-high flex flex-col justify-center items-center text-center">
-<span class="font-body-sm text-body-sm text-secondary">P7</span>
-<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px] uppercase mt-1 hidden lg:block">Mfg</span>
-</div>
-<div class="p-2 border-b border-r brutal-border bg-surface-container-high flex flex-col justify-center items-center text-center">
-<span class="font-body-sm text-body-sm text-secondary">P8</span>
-<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px] uppercase mt-1 hidden lg:block">Ops</span>
-</div>
-<div class="p-2 border-b border-r brutal-border bg-surface-container-high flex flex-col justify-center items-center text-center">
-<span class="font-body-sm text-body-sm text-secondary">P9</span>
-<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px] uppercase mt-1 hidden lg:block">Fcst</span>
-</div>
-<div class="p-2 border-b brutal-border bg-surface-container-high flex flex-col justify-center items-center text-center rounded-tr-lg">
-<span class="font-body-sm text-body-sm text-secondary">P10</span>
-<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px] uppercase mt-1 hidden lg:block">EoL</span>
-</div>
-<!-- Row 1: Tenaris -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-high sticky left-0 z-20 flex flex-col justify-center">
-<h3 class="font-headline-md text-headline-md text-on-surface text-lg">Tenaris</h3>
-<span class="font-body-md text-body-md text-on-surface-variant text-sm">Oil &amp; Gas / Mfg</span>
-</div>
-<!-- Cells -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P1 -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P2 -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-low matrix-cell-active relative cursor-pointer border-l-[3px] border-l-secondary transition-all duration-300 hover:bg-surface-container group flex justify-center items-center" onclick="openModal('Tenaris', 'P3c', 'Detailed Design of TBG1™ Premium Connection.')">
-<span class="text-secondary text-xl">●</span>
-</div> <!-- P3 -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-low matrix-cell-active relative cursor-pointer border-l-[3px] border-l-secondary transition-all duration-300 hover:bg-surface-container group flex justify-center items-center" onclick="openModal('Tenaris', 'P4', 'Full-Scale Fatigue Testing Program.')">
-<span class="text-secondary text-xl">●</span>
-</div> <!-- P4 -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P5 -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container border-dashed cursor-pointer flex justify-center items-center hover:bg-surface-container-high transition-colors" onclick="openModal('Tenaris', 'P6', 'Opto-Mechanical Inspection System.')">
-<span class="text-outline text-xl">◐</span>
-</div> <!-- P6 Partial -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P7 -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P8 -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P9 -->
-<div class="p-4 border-b brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P10 -->
-<!-- Row 2: Thermo Fisher -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-high sticky left-0 z-20 flex flex-col justify-center">
-<h3 class="font-headline-md text-headline-md text-on-surface text-lg">Thermo Fisher</h3>
-<span class="font-body-md text-body-md text-on-surface-variant text-sm">Life Sciences</span>
-</div>
-<!-- Cells -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P1 -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P2 -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P3 -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P4 -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P5 -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-low matrix-cell-active relative cursor-pointer border-l-[3px] border-l-secondary transition-all duration-300 hover:bg-surface-container group flex justify-center items-center" onclick="openModal('Thermo Fisher', 'P6', 'E2E Technical Order Management &amp; FAT Execution>
-<span class="text-secondary text-xl">●</span>
-</div> <!-- P6 -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container border-dashed cursor-pointer flex justify-center items-center hover:bg-surface-container-high transition-colors" onclick="openModal('Thermo Fisher', 'P7', 'eBOM -> mBOM Transition &amp; Regulatory Compliance>
-<span class="text-outline text-xl">◐</span>
-</div> <!-- P7 Partial -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P8 -->
-<div class="p-4 border-b border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P9 -->
-<div class="p-4 border-b brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P10 -->
-<!-- Row 3: Alstom -->
-<div class="p-4 border-r brutal-border bg-surface-container-high sticky left-0 z-20 flex flex-col justify-center rounded-bl-lg">
-<h3 class="font-headline-md text-headline-md text-on-surface text-lg">Alstom</h3>
-<span class="font-body-md text-body-md text-on-surface-variant text-sm">Rail Transport</span>
-</div>
-<!-- Cells -->
-<div class="p-4 border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P1 -->
-<div class="p-4 border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P2 -->
-<div class="p-4 border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P3 -->
-<div class="p-4 border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P4 -->
-<div class="p-4 border-r brutal-border bg-surface-container border-dashed cursor-pointer flex justify-center items-center hover:bg-surface-container-high transition-colors" onclick="openModal('Alstom', 'P5', 'System Integration Test for Toulouse Metro Line 3.')">
-<span class="text-outline text-xl">◐</span>
-</div> <!-- P5 Partial -->
-<div class="p-4 border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P6 -->
-<div class="p-4 border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P7 -->
-<div class="p-4 border-r brutal-border bg-surface-container-low opacity-50 flex justify-center items-center" /> <!-- P8 -->
-<div class="p-4 border-r brutal-border bg-surface-container-low matrix-cell-active relative cursor-pointer border-l-[3px] border-l-secondary transition-all duration-300 hover:bg-surface-container group flex justify-center items-center" onclick="openModal('Alstom', 'P9', 'ARISE / Macinino Financial Forecasting.')">
-<span class="text-secondary text-xl">●</span>
-</div> <!-- P9 -->
-<div class="p-4 brutal-border bg-surface-container-low opacity-50 flex justify-center items-center rounded-br-lg" /> <!-- P10 -->
-</div>
-</div>
-<!-- Legend -->
-<div class="mt-4 flex gap-gutter items-center font-body-sm text-body-sm text-on-surface-variant justify-end">
-<div class="flex items-center gap-2">
-<span class="text-secondary text-lg">●</span>
-<span class="">Active Lead / E2E</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="text-outline text-lg">◐</span>
-<span class="">Partial / Support</span>
-</div>
-</div>
-</div>
-</section>
-</main>
-<!-- Footer -->
-<footer class="bg-surface-container-highest text-on-surface font-body-md text-body-md font-body-sm text-body-sm full-width bottom-0 border-t-2 border-outline-variant flat no shadows w-full z-50 relative">
-<div class="flex flex-col md:flex-row justify-between items-center w-full px-10 py-8 gap-gutter">
-<div class="font-label-caps text-body-md text-on-surface">
-                    © 2024 FEDERICO BARAVALLE. ALL RIGHTS RESERVED.
-                </div>
-<div class="flex gap-gutter items-center">
-<a class="text-on-surface-variant hover:text-on-surface transition-opacity font-body-sm text-body-sm hover:scale-95 transition-transform duration-100" href="#">LinkedIn</a>
-<a class="text-on-surface-variant hover:text-on-surface transition-opacity font-body-sm text-body-sm hover:scale-95 transition-transform duration-100" href="#">GitHub</a>
-<a class="text-on-surface-variant hover:text-on-surface transition-opacity font-body-sm text-body-sm hover:scale-95 transition-transform duration-100" href="#">Documentation</a>
-<a class="text-on-surface-variant hover:text-on-surface transition-opacity font-body-sm text-body-sm hover:scale-95 transition-transform duration-100" href="#">Contact</a>
-</div>
-</div>
-</footer>
-</div>
-<!-- Modal Overlay -->
-<div class="fixed inset-0 z-[100] flex items-center justify-center p-4 hidden" id="project-modal">
-<!-- Backdrop -->
-<div class="absolute inset-0 bg-tertiary bg-opacity-50 backdrop-blur-sm" onclick="closeModal()" />
-<!-- Modal Content -->
-<div class="relative bg-surface rounded-lg brutal-border w-full max-w-4xl max-h-[921px] overflow-y-auto flex flex-col md:flex-row shadow-2xl">
-<!-- Close Button -->
-<button class="absolute top-4 right-4 text-outline hover:text-secondary transition-colors z-10 bg-surface rounded-full p-1" onclick="closeModal()">
-<span class="material-symbols-outlined" data-icon="close">close</span>
-</button>
-<!-- Image Column -->
-<div class="w-full md:w-1/2 min-h-[300px] border-b md:border-b-0 md:border-r border-outline relative rounded-t-lg md:rounded-l-lg md:rounded-tr-none overflow-hidden">
-<img alt="Project Visual" class="absolute inset-0 w-full h-full object-cover opacity-90 mix-blend-multiply" data-alt="A highly detailed, practitioner-grade technical visualization representing E2E Technical Order Management &amp; FAT Execution. for Thermo Fisher in an industrial setting, featuring sharp angles, warm steel tones, and precise engineering elements, suitable for a field protocol design syst id="modal-image" src="/assets/project-visual.png" />
-</div>
-<!-- Content Column -->
-<div class="w-full md:w-1/2 p-10 flex flex-col justify-center">
-<div class="font-body-sm text-body-sm text-secondary mb-4 flex items-center gap-2">
-<span class="px-2 py-1 border border-secondary rounded font-label-caps" id="modal-eyebrow">Thermo Fisher x P6</span>
-</div>
-<h3 class="font-headline-lg text-headline-lg text-on-surface mb-8 leading-tight" id="modal-title">E2E Technical Order Management &amp; FAT Execution.</h3>
-<p class="font-body-md text-body-md text-on-surface-variant mb-8">
-                    Detailed engineering documentation and execution metrics for this phase. Data density prioritizing technical parameters, validation standards, and integration protocols applied during the lifecycle segment.
-                </p>
-<div class="flex flex-wrap gap-2">
-<span class="font-label-caps text-label-caps text-on-secondary bg-secondary px-2 py-1 brutal-border rounded">VALIDATED</span>
-<span class="font-label-caps text-label-caps text-on-surface border border-outline px-2 py-1 rounded">TECH-DOC-01</span>
-</div>
-</div>
-</div>
-</div>
-<script>
-        function openModal(company, phase, description) {
-            document.getElementById('modal-eyebrow').textContent = `${company} x ${phase}`;
-            document.getElementById('modal-title').textContent = description;
-            
-            // Subtle dynamic image update placeholder based on category
-            const imgAlt = `A highly detailed, practitioner-grade technical visualization representing ${description} for ${company} in an industrial setting, featuring sharp angles, warm steel tones, and precise engineering elements, suitable for a field protocol design system.`;
-            document.getElementById('modal-image').setAttribute('data-alt', imgAlt);
-            
-            const modal = document.getElementById('project-modal');
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
+<Layout title="Federico Baravalle — Engineering Lifecycle Portfolio">
+  <div class="layout">
+    <Spine />
 
-        function closeModal() {
-            const modal = document.getElementById('project-modal');
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-    </script>
+    <div class="body">
+      <!-- HERO -->
+      <section class="section hero">
+        <div class="section__content">
+          <p class="ref-tag ref-tag--active type-label-caps">[REF. 001]</p>
+          <h1 class="hero__headline type-headline-lg">Engineering,<br />end to end.</h1>
+          <p class="hero__sub type-body-md">
+            From system requirements to factory floor — across rail, oil &amp; gas,
+            and advanced manufacturing.
+          </p>
+          <a class="btn btn--cta type-label-caps" href="#lifecycle-matrix">
+            [View Lifecycle Matrix ↓]
+          </a>
+        </div>
+        <div class="section__margin">
+          <div class="phase-list">
+            {phases.map((p) => (
+              <div class="phase-list__item type-label-caps">
+                <span>{p.code}</span><span>{p.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
+      <Ruler />
 
-</body></html>
+      <!-- BIO STRIP -->
+      <section class="section bio">
+        <div class="section__content">
+          <p class="bio__text type-body-md">
+            I bridge high-level system architecture and rigorous physical execution.
+            My approach is rooted in technical precision and data-driven methodology,
+            ensuring robust engineering across complex industrial landscapes. I don't
+            just design — I validate, integrate, and scale.
+          </p>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat__num type-headline-md">6+</div>
+              <div class="stat__label type-label-caps">Years Exp</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num type-headline-md">3</div>
+              <div class="stat__label type-label-caps">Industries</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num type-headline-md">10</div>
+              <div class="stat__label type-label-caps">Lifecycle Phases</div>
+            </div>
+          </div>
+        </div>
+        <div class="section__margin">
+          <div class="margin-block">
+            <p class="ref-tag type-label-caps">[FIELD NOTE]</p>
+            <p class="margin-note type-margin-note">
+              Federico's span crosses oil &amp; gas, advanced manufacturing, and rail
+              — three sectors, one discipline of end-to-end engineering rigour.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <Ruler />
+
+      <!-- MATRIX -->
+      <Matrix />
+
+      <Ruler />
+
+      <!-- FOOTER -->
+      <footer class="footer">
+        <div>
+          <div class="footer__name type-label-caps">Federico Baravalle</div>
+          <div class="footer__tag type-margin-note">Engineering, end to end. © 2026</div>
+        </div>
+        <div class="footer__links">
+          <a class="type-label-caps" href="#">[LinkedIn]</a>
+          <a class="type-label-caps" href="mailto:baravalle.fede@gmail.com">[Email]</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <Modal />
+</Layout>

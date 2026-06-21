@@ -1,0 +1,10 @@
+---
+// Left spine — structural identity element (NOT a sidebar/nav).
+const tabs = ['Mechanical', 'Program Mgmt', 'Robotics & SW'];
+---
+<aside class="spine">
+  <span class="spine__title type-display-vertical">FEDERICO BARAVALLE</span>
+  <nav class="spine__nav" aria-label="Disciplines">
+    {tabs.map((t) => <span class="spine__tab type-label-caps">{t}</span>)}
+  </nav>
+</aside>
