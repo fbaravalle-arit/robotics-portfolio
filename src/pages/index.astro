@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Spine from '../components/Spine.astro';
+import Banner from '../components/Banner.astro';
 import Ruler from '../components/Ruler.astro';
 import Matrix from '../components/Matrix.astro';
 import Modal from '../components/Modal.astro';
@@ -8,10 +8,9 @@ import { phases } from '../data/matrixData.js';
 ---
 
 <Layout title="Federico Baravalle — Engineering Lifecycle Portfolio">
-  <div class="layout">
-    <Spine />
+  <Banner />
 
-    <div class="body">
+  <div class="body">
       <!-- HERO -->
       <section class="section hero">
         <div class="section__content">
@@ -91,7 +90,6 @@ import { phases } from '../data/matrixData.js';
           <a class="type-label-caps" href="mailto:baravalle.fede@gmail.com">[Email]</a>
         </div>
       </footer>
-    </div>
   </div>
 
   <Modal />
