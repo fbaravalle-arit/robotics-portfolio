@@ -4,70 +4,46 @@ import Banner from '../components/Banner.astro';
 import Ruler from '../components/Ruler.astro';
 import Matrix from '../components/Matrix.astro';
 import Modal from '../components/Modal.astro';
-import { phases } from '../data/matrixData.js';
 ---
 
 <Layout title="Federico Baravalle — Engineering Lifecycle Portfolio">
   <Banner />
 
-  <div class="body">
-      <!-- HERO -->
-      <section class="section hero">
-        <div class="section__content">
-          <p class="ref-tag ref-tag--active type-label-caps">[REF. 001]</p>
-          <h1 class="hero__headline type-headline-lg">Engineering,<br />end to end.</h1>
-          <p class="hero__sub type-body-md">
-            From system requirements to factory floor — across rail, oil &amp; gas,
-            and advanced manufacturing.
-          </p>
-          <a class="btn btn--cta type-label-caps" href="#lifecycle-matrix">
-            [View Lifecycle Matrix ↓]
-          </a>
-        </div>
-        <div class="section__margin">
-          <div class="phase-list">
-            {phases.map((p) => (
-              <div class="phase-list__item type-label-caps">
-                <span>{p.code}</span><span>{p.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+  <div class="rail-layout">
+    <!-- Full-height left rail -->
+    <aside class="rail">
+      <span class="rail__label">Mechanical Engineering</span>
+    </aside>
 
-      <Ruler />
-
-      <!-- BIO STRIP -->
-      <section class="section bio">
-        <div class="section__content">
-          <p class="bio__text type-body-md">
-            I bridge high-level system architecture and rigorous physical execution.
-            My approach is rooted in technical precision and data-driven methodology,
-            ensuring robust engineering across complex industrial landscapes. I don't
-            just design — I validate, integrate, and scale.
-          </p>
-          <div class="stats">
-            <div class="stat">
-              <div class="stat__num type-headline-md">6+</div>
-              <div class="stat__label type-label-caps">Years Exp</div>
-            </div>
-            <div class="stat">
-              <div class="stat__num type-headline-md">3</div>
-              <div class="stat__label type-label-caps">Industries</div>
-            </div>
-            <div class="stat">
-              <div class="stat__num type-headline-md">10</div>
-              <div class="stat__label type-label-caps">Lifecycle Phases</div>
-            </div>
+    <div class="rail-main">
+      <!-- INTRO -->
+      <section class="intro-content">
+        <p class="bio__text type-body-md">
+          Senior mechanical engineer with 6+ years designing and delivering
+          electromechanical machinery under full regulatory compliance. Expert in
+          mechanical design (CAD, FEA, DFMA), product lifecycle ownership from
+          development, NPI to commissioning and sustaining. Delivered $10M+ projects
+          from concept to production. Drove engineering continuous improvement program
+          and led cross-functional teams, with results communicated to VP level.
+          Experienced mentoring junior engineers. Hands-on software and data science
+          practitioner.
+        </p>
+        <p class="bio__text type-body-md">
+          I bring a collaborative, results-driven approach, with deep curiosity and
+          commitment.
+        </p>
+        <div class="stats">
+          <div class="stat">
+            <div class="stat__num type-headline-md">6+</div>
+            <div class="stat__label type-label-caps">Years Exp</div>
           </div>
-        </div>
-        <div class="section__margin">
-          <div class="margin-block">
-            <p class="ref-tag type-label-caps">[FIELD NOTE]</p>
-            <p class="margin-note type-margin-note">
-              Federico's span crosses oil &amp; gas, advanced manufacturing, and rail
-              — three sectors, one discipline of end-to-end engineering rigour.
-            </p>
+          <div class="stat">
+            <div class="stat__num type-headline-md">3</div>
+            <div class="stat__label type-label-caps">Industries</div>
+          </div>
+          <div class="stat">
+            <div class="stat__num type-headline-md">10</div>
+            <div class="stat__label type-label-caps">Lifecycle Phases</div>
           </div>
         </div>
       </section>
@@ -76,21 +52,20 @@ import { phases } from '../data/matrixData.js';
 
       <!-- MATRIX -->
       <Matrix />
-
-      <Ruler />
-
-      <!-- FOOTER -->
-      <footer class="footer">
-        <div>
-          <div class="footer__name type-label-caps">Federico Baravalle</div>
-          <div class="footer__tag type-margin-note">Engineering, end to end. © 2026</div>
-        </div>
-        <div class="footer__links">
-          <a class="type-label-caps" href="#">[LinkedIn]</a>
-          <a class="type-label-caps" href="mailto:baravalle.fede@gmail.com">[Email]</a>
-        </div>
-      </footer>
+    </div>
   </div>
+
+  <!-- FOOTER (full width) -->
+  <footer class="footer">
+    <div>
+      <div class="footer__name type-label-caps">Federico Baravalle</div>
+      <div class="footer__tag type-margin-note">Engineering, end to end. © 2026</div>
+    </div>
+    <div class="footer__links">
+      <a class="type-label-caps" href="#">[LinkedIn]</a>
+      <a class="type-label-caps" href="mailto:baravalle.fede@gmail.com">[Email]</a>
+    </div>
+  </footer>
 
   <Modal />
 </Layout>

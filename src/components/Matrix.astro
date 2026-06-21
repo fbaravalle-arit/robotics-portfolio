@@ -1,5 +1,5 @@
 ---
-import { phases, companies, statusMap, getCoverage } from '../data/matrixData.js';
+import { phases, companies, statusMap } from '../data/matrixData.js';
 
 const marker = { active: '●', partial: '◐' };
 ---
@@ -56,28 +56,12 @@ const marker = { active: '●', partial: '◐' };
         ))}
       </div>
     </div>
-
-    <!-- Right-margin coverage column -->
-    <aside class="coverage" aria-label="Coverage summary">
-      {companies.map((c) => {
-        const { active, partial, coverage } = getCoverage(c.id);
-        return (
-          <div class="coverage__block type-margin-note">
-            <div class="coverage__co type-label-caps">[{c.name.split(' ')[0].toUpperCase()}]</div>
-            <div>ACTIVE: {active}</div>
-            <div>PARTIAL: {partial}</div>
-            <div class="coverage__rule"></div>
-            <div>COVERAGE: {coverage}%</div>
-          </div>
-        );
-      })}
-    </aside>
   </div>
 
   <!-- Legend -->
   <div class="legend">
     <div class="legend__row"><span class="legend__mark">[●]</span><span class="type-body-sm">ACTIVE — direct project ownership</span></div>
     <div class="legend__row"><span class="legend__mark legend__mark--partial">[◐]</span><span class="type-body-sm">PARTIAL — adjacent or support role</span></div>
-    <div class="legend__row"><span class="type-label-caps">&nbsp;&nbsp;&nbsp;</span><span class="type-body-sm">INACTIVE — not covered</span></div>
+    <div class="legend__row"><span class="legend__mark legend__mark--inactive">[&nbsp;]</span><span class="type-body-sm">INACTIVE — not covered</span></div>
   </div>
 </section>
