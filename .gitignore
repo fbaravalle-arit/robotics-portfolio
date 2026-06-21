@@ -28,3 +28,6 @@ Thumbs.db
 # Local screenshots & browser-automation artifacts
 Screenshot*.png
 .playwright-mcp/
+
+# Local working notes
+FEEDBACK.md
