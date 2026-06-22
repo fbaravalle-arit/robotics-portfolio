@@ -281,6 +281,8 @@ img { display: block; max-width: 100%; }
 .stats {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 2rem;
   border-left: 1px solid var(--rule-light);
   padding-left: 2.5rem;
