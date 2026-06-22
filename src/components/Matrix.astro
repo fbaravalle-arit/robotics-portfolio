@@ -6,20 +6,21 @@ const marker = { active: '●', partial: '◐' };
 
 <section class="matrix-section" id="lifecycle-matrix">
   <div class="matrix-head">
-    <p class="ref-tag ref-tag--active type-label-caps">[REF. 002 / LIFECYCLE]</p>
-    <h2 class="type-headline-md">Engineering Lifecycle Matrix</h2>
-    <p class="type-body-md">Capability coverage across the development lifecycle, mapped per organisation.</p>
+    <h2 class="type-headline-md">Engineering systems life cycle experience matrix</h2>
+    <p class="type-body-md">Competence coverage through Engineering systems life cycle, mapped by company. Click into each cell to get more info.</p>
   </div>
 
   <div class="matrix-wrap">
     <div class="matrix-scroll">
       <div class="matrix" role="table" aria-label="Engineering lifecycle matrix">
         <!-- Header row: corner + company columns -->
-        <div class="m-corner" role="columnheader"></div>
+        <div class="m-corner" role="columnheader">
+          <span class="m-corner__label type-label-caps">Development life cycle phases</span>
+        </div>
         {companies.map((c) => (
           <div class="m-company" role="columnheader">
             <h3 class="type-headline-md">{c.name}</h3>
-            <span class="type-margin-note">{c.sector} · {c.years}</span>
+            <span class="type-margin-note">{c.years}</span>
           </div>
         ))}
 
