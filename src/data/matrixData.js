@@ -21,7 +21,7 @@ export const phases = [
 export const companies = [
   { id: 'mixot', name: 'MIXOT', sector: 'Industrial Automation / Founder', years: '2025–2026' },
   { id: 'alstom', name: 'Alstom', sector: 'Rail / Urban Transit Systems', years: '2023–2025' },
-  { id: 'thermofisher', name: 'Thermo Fisher Scientific', sector: 'Advanced Manufacturing / Lab Instruments', years: '2021–2022' },
+  { id: 'thermofisher', name: 'Thermo Fisher Scientific', displayName: 'Thermo&nbsp;Fisher<br>Scientific', sector: 'Advanced Manufacturing / Lab Instruments', years: '2021–2022' },
   { id: 'tenaris', name: 'Tenaris', sector: 'Oil & Gas / Premium Connections', years: '2018–2020' },
 ];
 

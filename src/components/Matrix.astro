@@ -19,7 +19,7 @@ const marker = { active: '●', partial: '◐' };
         </div>
         {companies.map((c) => (
           <div class="m-company" role="columnheader">
-            <h3 class="type-headline-md">{c.name}</h3>
+            <h3 class="type-headline-md" set:html={c.displayName ?? c.name}></h3>
             <span class="type-margin-note">{c.years}</span>
           </div>
         ))}
