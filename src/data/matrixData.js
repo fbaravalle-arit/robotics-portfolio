@@ -19,13 +19,19 @@ export const phases = [
 ];
 
 export const companies = [
-  { id: 'tenaris', name: 'Tenaris', sector: 'Oil & Gas / Premium Connections', years: '2018–2020' },
-  { id: 'thermofisher', name: 'Thermo Fisher Scientific', sector: 'Advanced Manufacturing / Lab Instruments', years: '2020–2022' },
+  { id: 'mixot', name: 'MIXOT', sector: 'Industrial Automation / Founder', years: '2024–2025' },
   { id: 'alstom', name: 'Alstom', sector: 'Rail / Urban Transit Systems', years: '2022–2024' },
+  { id: 'thermofisher', name: 'Thermo Fisher Scientific', sector: 'Advanced Manufacturing / Lab Instruments', years: '2020–2022' },
+  { id: 'tenaris', name: 'Tenaris', sector: 'Oil & Gas / Premium Connections', years: '2018–2020' },
 ];
 
 // Authoritative state grid (status per company × phase)
 export const statusMap = {
+  mixot: {
+    P1: 'active', P2: 'active', P3a: 'inactive', P3b: 'inactive',
+    P3c: 'inactive', P4: 'inactive', P5: 'inactive', P6: 'inactive',
+    P7: 'inactive', P8: 'inactive', P9: 'inactive', P10: 'inactive',
+  },
   tenaris: {
     P1: 'active', P2: 'active', P3a: 'active', P3b: 'active',
     P3c: 'active', P4: 'active', P5: 'partial', P6: 'active',

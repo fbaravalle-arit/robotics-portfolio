@@ -14,46 +14,45 @@ const marker = { active: '●', partial: '◐' };
   <div class="matrix-wrap">
     <div class="matrix-scroll">
       <div class="matrix" role="table" aria-label="Engineering lifecycle matrix">
-        <!-- Header row -->
+        <!-- Header row: corner + company columns -->
         <div class="m-corner" role="columnheader"></div>
+        {companies.map((c) => (
+          <div class="m-company" role="columnheader">
+            <h3 class="type-headline-md">{c.name}</h3>
+            <span class="type-margin-note">{c.sector} · {c.years}</span>
+          </div>
+        ))}
+
+        <!-- Phase rows -->
         {phases.map((p) => {
           const anyActive = companies.some((c) => statusMap[c.id][p.code] === 'active');
           return (
-            <div class="m-phase" role="columnheader">
-              <span class={`m-phase__code type-label-caps ${anyActive ? 'm-phase__code--active' : ''}`}>{p.code}</span>
-              <span class="m-phase__label type-margin-note">{p.label}</span>
-            </div>
+            <>
+              <div class="m-phasehead" role="rowheader">
+                <span class={`m-phasehead__code type-label-caps ${anyActive ? 'm-phasehead__code--active' : ''}`}>{p.code}</span>
+                <span class="m-phasehead__label type-margin-note">{p.label}</span>
+              </div>
+              {companies.map((c) => {
+                const status = statusMap[c.id][p.code];
+                if (status === 'inactive') {
+                  return <div class="cell cell--inactive" role="cell" aria-label={`${c.name} ${p.code} not covered`}></div>;
+                }
+                return (
+                  <button
+                    class={`cell cell--${status}`}
+                    role="cell"
+                    type="button"
+                    data-company={c.id}
+                    data-phase={p.code}
+                    aria-label={`${c.name} ${p.code} — ${status}. Open detail.`}
+                  >
+                    <span class="marker">{marker[status]}</span>
+                  </button>
+                );
+              })}
+            </>
           );
         })}
-
-        <!-- Company rows -->
-        {companies.map((c) => (
-          <>
-            <div class="m-rowhead" role="rowheader">
-              <span class="notch" aria-hidden="true"></span>
-              <h3 class="type-headline-md">{c.name}</h3>
-              <span class="type-margin-note">{c.sector} · {c.years}</span>
-            </div>
-            {phases.map((p) => {
-              const status = statusMap[c.id][p.code];
-              if (status === 'inactive') {
-                return <div class="cell cell--inactive" role="cell" aria-label={`${c.name} ${p.code} not covered`}></div>;
-              }
-              return (
-                <button
-                  class={`cell cell--${status}`}
-                  role="cell"
-                  type="button"
-                  data-company={c.id}
-                  data-phase={p.code}
-                  aria-label={`${c.name} ${p.code} — ${status}. Open detail.`}
-                >
-                  <span class="marker">{marker[status]}</span>
-                </button>
-              );
-            })}
-          </>
-        ))}
       </div>
     </div>
   </div>
