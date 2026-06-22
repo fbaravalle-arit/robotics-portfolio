@@ -1,13 +1,46 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Banner from '../components/Banner.astro';
-import Ruler from '../components/Ruler.astro';
 import Matrix from '../components/Matrix.astro';
 import Modal from '../components/Modal.astro';
 ---
 
 <Layout title="Federico Baravalle — Engineering Lifecycle Portfolio">
   <Banner />
+
+  <!-- HERO (full width) -->
+  <section class="hero">
+    <div class="hero__copy">
+      <p class="bio__text type-body-md">
+        Senior mechanical engineer with 6+ years designing and delivering
+        electromechanical machinery under full regulatory compliance. Expert in
+        mechanical design (CAD, FEA, DFMA), product lifecycle ownership from
+        development, NPI to commissioning and sustaining. Delivered $10M+ projects
+        from concept to production. Drove engineering continuous improvement program
+        and led cross-functional teams, with results communicated to VP level.
+        Experienced mentoring junior engineers. Hands-on software and data science
+        practitioner.
+      </p>
+      <p class="bio__text type-body-md">
+        I bring a collaborative, results-driven approach, with deep curiosity and
+        commitment.
+      </p>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat__num type-headline-md">6+</div>
+        <div class="stat__label type-label-caps">Years Exp</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num type-headline-md">3</div>
+        <div class="stat__label type-label-caps">Industries</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num type-headline-md">10</div>
+        <div class="stat__label type-label-caps">Lifecycle Phases</div>
+      </div>
+    </div>
+  </section>
 
   <div class="rail-layout">
     <!-- Full-height left rail -->
@@ -16,40 +49,6 @@ import Modal from '../components/Modal.astro';
     </aside>
 
     <div class="rail-main">
-      <!-- INTRO -->
-      <section class="intro-content">
-        <p class="bio__text type-body-md">
-          Senior mechanical engineer with 6+ years designing and delivering
-          electromechanical machinery under full regulatory compliance. Expert in
-          mechanical design (CAD, FEA, DFMA), product lifecycle ownership from
-          development, NPI to commissioning and sustaining. Delivered $10M+ projects
-          from concept to production. Drove engineering continuous improvement program
-          and led cross-functional teams, with results communicated to VP level.
-          Experienced mentoring junior engineers. Hands-on software and data science
-          practitioner.
-        </p>
-        <p class="bio__text type-body-md">
-          I bring a collaborative, results-driven approach, with deep curiosity and
-          commitment.
-        </p>
-        <div class="stats">
-          <div class="stat">
-            <div class="stat__num type-headline-md">6+</div>
-            <div class="stat__label type-label-caps">Years Exp</div>
-          </div>
-          <div class="stat">
-            <div class="stat__num type-headline-md">3</div>
-            <div class="stat__label type-label-caps">Industries</div>
-          </div>
-          <div class="stat">
-            <div class="stat__num type-headline-md">10</div>
-            <div class="stat__label type-label-caps">Lifecycle Phases</div>
-          </div>
-        </div>
-      </section>
-
-      <Ruler />
-
       <!-- MATRIX -->
       <Matrix />
     </div>
