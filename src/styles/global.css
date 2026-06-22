@@ -143,6 +143,7 @@ img { display: block; max-width: 100%; }
 }
 .banner__link:hover { color: var(--ink); }
 .banner__link svg { display: block; }
+.banner__icon { display: block; width: 18px; height: 18px; object-fit: contain; flex: none; }
 .banner__cta {
   background: var(--ink);
   color: var(--on-primary);
