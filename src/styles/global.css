@@ -278,7 +278,7 @@ img { display: block; max-width: 100%; }
 .hero__copy { max-width: 80ch; }
 .bio__text { color: var(--ink); margin-bottom: 1.5rem; text-align: justify; }
 .bio__text:last-child { margin-bottom: 0; }
-.bio__text--full { grid-column: 1 / -1; margin-bottom: 0; }
+.bio__text--full { grid-column: 1 / -1; margin-bottom: 0; text-align: center; }
 .stats {
   display: flex;
   flex-direction: column;
