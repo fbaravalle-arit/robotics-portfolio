@@ -7,7 +7,7 @@ const marker = { active: '●', partial: '◐' };
 <section class="matrix-section" id="lifecycle-matrix">
   <div class="matrix-head">
     <h2 class="type-headline-md">Engineering systems life cycle experience matrix</h2>
-    <p class="type-body-md">Competence coverage through Engineering systems life cycle, mapped by company. Click into each cell to get more info.</p>
+    <p class="type-body-md">Competence coverage through Engineering systems life cycle, mapped by company.</p>
   </div>
 
   <div class="matrix-wrap">
@@ -39,16 +39,13 @@ const marker = { active: '●', partial: '◐' };
                   return <div class="cell cell--inactive" role="cell" aria-label={`${c.name} ${p.code} not covered`}></div>;
                 }
                 return (
-                  <button
+                  <div
                     class={`cell cell--${status}`}
                     role="cell"
-                    type="button"
-                    data-company={c.id}
-                    data-phase={p.code}
-                    aria-label={`${c.name} ${p.code} — ${status}. Open detail.`}
+                    aria-label={`${c.name} ${p.code} — ${status}`}
                   >
                     <span class="marker">{marker[status]}</span>
-                  </button>
+                  </div>
                 );
               })}
             </>
