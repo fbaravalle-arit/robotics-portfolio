@@ -412,15 +412,17 @@ img { display: block; max-width: 100%; }
 .footer {
   border-top: 1px solid var(--ink);
   background: var(--surface-container-highest);
-  padding: 2rem 2.5rem;
-  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
-  flex-wrap: wrap;
+  padding: 2.5rem;
+  text-align: center;
 }
-.footer__name { color: var(--ink); }
-.footer__tag { color: var(--faded); margin-top: 0.4rem; }
-.footer__links { display: flex; gap: 1.5rem; }
-.footer__links a { color: var(--faded); transition: color 0.15s ease-out; }
-.footer__links a:hover { color: var(--ink); }
+.footer__quote { margin: 0; max-width: 70ch; margin-inline: auto; }
+.footer__quote-text { color: var(--ink); font-style: italic; }
+.footer__quote-cite {
+  display: block;
+  margin-top: 0.75rem;
+  color: var(--faded);
+  font-style: normal;
+}
 
 /* ============================================================
    MODAL
