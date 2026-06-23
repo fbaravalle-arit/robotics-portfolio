@@ -102,6 +102,21 @@ export const cellContent = {
   },
 };
 
+// Phase visual per cell, keyed `${company_id}_${phase_code}`.
+// Served from public/assets (runtime modal <img> src). Cells without an
+// entry fall back to the placeholder image in the modal.
+export const cellImages = {
+  mixot_P1: '/assets/P1_MIXOT.png',
+  alstom_P3a: '/assets/P3A_ALSTOM.png',
+  tenaris_P3b: '/assets/P3B_TENARIS.png',
+  thermofisher_P3c: '/assets/P3C_THERMO.png',
+  tenaris_P4: '/assets/P4_0_TENARIS.png',
+  thermofisher_P5: '/assets/P5_THERMO.png',
+  tenaris_P6: '/assets/P6_TENARIS.png',
+  alstom_P7: '/assets/P7_ALSTOM.png',
+  alstom_P8: '/assets/P8_ALSTOM.png',
+};
+
 // Stub for active/partial cells without authoritative copy
 const STUB = {
   title: 'Documentation in progress',
@@ -116,12 +131,15 @@ export function getCell(companyId, phaseCode) {
   const status = statusMap[companyId]?.[phaseCode] ?? 'inactive';
   const key = `${companyId}_${phaseCode}`;
   const content = cellContent[key] ?? (status === 'inactive' ? null : STUB);
-  return {
+  const cell = {
     company_id: companyId,
     phase_code: phaseCode,
     status,
     ...(content ?? {}),
   };
+  // Attach the per-cell phase image when one exists (overrides stub/placeholder).
+  if (content && cellImages[key]) cell.image_path = cellImages[key];
+  return cell;
 }
 
 /** Flat map of every interactive cell, keyed `${company}_${phase}` (for client lookup). */

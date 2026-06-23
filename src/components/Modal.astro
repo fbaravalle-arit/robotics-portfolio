@@ -45,10 +45,20 @@ const cells = getAllCellData();
     return `— ${highlighted}`;
   }
 
+  const PLACEHOLDER_IMAGE = '/assets/project-visual.png';
+
   function openModal(companyId, phaseCode) {
     const data = cells[`${companyId}_${phaseCode}`];
     const company = companyId.charAt(0).toUpperCase() + companyId.slice(1);
     elEyebrow.textContent = `[${company.toUpperCase()} × ${phaseCode.toUpperCase()}]`;
+
+    // Swap in the per-cell phase image; fall back to the placeholder.
+    const imgPath =
+      data && typeof data.image_path === 'string' && data.image_path.startsWith('/assets/')
+        ? data.image_path
+        : PLACEHOLDER_IMAGE;
+    elImage.src = imgPath;
+    elImage.alt = data && data.title ? data.title : '';
 
     if (!data || !data.title) {
       elTitle.textContent = 'No detail available';

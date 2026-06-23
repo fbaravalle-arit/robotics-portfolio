@@ -39,13 +39,16 @@ const marker = { active: '●', partial: '◐' };
                   return <div class="cell cell--inactive" role="cell" aria-label={`${c.name} ${p.code} not covered`}></div>;
                 }
                 return (
-                  <div
+                  <button
                     class={`cell cell--${status}`}
                     role="cell"
-                    aria-label={`${c.name} ${p.code} — ${status}`}
+                    type="button"
+                    data-company={c.id}
+                    data-phase={p.code}
+                    aria-label={`${c.name} ${p.code} — ${status}. Open detail.`}
                   >
                     <span class="marker">{marker[status]}</span>
-                  </div>
+                  </button>
                 );
               })}
             </>
