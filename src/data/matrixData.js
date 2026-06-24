@@ -44,7 +44,7 @@ export const statusMap = {
   },
   alstom: {
     P1:'inactive', P2: 'active', P3a: 'active', P3b: 'active',
-    P3c: 'inactive', P4: 'active', P5: 'inactive', P6: 'active',
+    P3c: 'inactive', P4: 'partial', P5: 'inactive', P6: 'partial',
     P7: 'active', P8: 'active', P9: 'inactive', P10: 'inactive',
   },
 };
