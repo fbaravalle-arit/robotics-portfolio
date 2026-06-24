@@ -33,73 +33,158 @@ export const statusMap = {
     P7: 'inactive', P8: 'inactive', P9: 'inactive', P10: 'inactive',
   },
   tenaris: {
-    P1: 'partial', P2: 'active', P3a: 'partial', P3b: 'active',
+    P1: 'partial', P2: 'active', P3a: 'inactive', P3b: 'active',
     P3c: 'active', P4: 'active', P5: 'inactive', P6: 'active',
     P7: 'partial', P8: 'inactive', P9: 'partial', P10: 'inactive',
   },
   thermofisher: {
-    P1: 'partial', P2: 'active', P3a: 'inactive', P3b: 'active',
+    P1: 'active', P2: 'inactive', P3a: 'inactive', P3b: 'active',
     P3c: 'active', P4: 'inactive', P5: 'active', P6: 'inactive',
-    P7: 'inactive', P8: 'active', P9: 'inactive', P10: 'inactive',
+    P7: 'inactive', P8: 'inactive', P9: 'inactive', P10: 'inactive',
   },
   alstom: {
-    P1:'active', P2: 'active', P3a: 'active', P3b: 'active',
-    P3c: 'active', P4: 'active', P5: 'active', P6: 'active',
+    P1:'inactive', P2: 'active', P3a: 'active', P3b: 'active',
+    P3c: 'inactive', P4: 'active', P5: 'inactive', P6: 'active',
     P7: 'active', P8: 'active', P9: 'inactive', P10: 'inactive',
   },
 };
 
 // Authoritative modal copy, keyed `${company_id}_${phase_code}`
 export const cellContent = {
+  tenaris_P1: {
+    title: 'Saudi Aramco project',
+    description: 'Collected and translated Mechanical/Industrial requirements through client specifications, commercial front end contacts and internal Subject Matter Expert (SME) input.',
+    metrics: [''],
+    stamp: '',
+  },
+  tenaris_P2: {
+    title: 'ADNOC Mega-tender',
+    description: 'Co‑authored the technical sections of a commercial offer, including the product qualification strategy and FEA technical notes.',
+    metrics: ['Tenaris long-term contract award for 1.9 billion USD'],
+    stamp: 'VALIDATED',
+  },
+  tenaris_P3b: {
+    title: 'TBG1™ Parametric design with FEA',
+    description: 'Performed over 20 FEA studies across 10 conceptual designs, using Matlab post‑processing scripts to support development of a low-end product.',
+    metrics: ['US20250155056A1 patent and commercial release.'],
+    stamp: 'VALIDATED',
+  },
   tenaris_P3c: {
-    title: 'TBG1™ Premium Connection — Compliance & Fatigue Validation',
-    description: 'Led detailed design of premium threaded connections for high-pressure oil & gas applications, ensuring full compliance with [API 5CT] and proprietary [TBG1™] geometry tolerances. Designed fatigue test protocols and analysed failure modes under cyclic load.',
-    metrics: ['0 field failures across qualification batch'],
-    image_path: 'placeholder.jpg',
+    title: 'Product family design leader',
+    description: 'Led detailed design of product family for high-pressure oil and gas applications, ensuring full compliance with [API 5C5] standards and alignment with proprietary manufacturing processes.',
+    metrics: ['+10 Product family minor developments without failures'],
     stamp: 'VALIDATED',
   },
   tenaris_P4: {
-    title: 'Full-Scale Fatigue Testing Program',
-    description: 'Designed and executed a multi-stage physical validation program for premium connections, including [DOE] planning, sample manufacturing coordination, and full-scale [make-up/break-out cycling]. Analysed torque-turn curves and thread engagement data to qualify connection geometry changes.',
-    metrics: [],
-    image_path: 'placeholder.jpg',
+    title: 'Full-Scale Testing',
+    description: 'Designed and executed a validation program, including [DOE] planning, sample manufacturing coordination, and 1-week test, on a simulated oil rig, with a 8 members rig crew (see above figure) with negative results.',
+    metrics: ['Detailed failure analysis and development process room for improvement guidelines.'],
     stamp: 'VALIDATED',
   },
   tenaris_P6: {
-    title: 'Opto-Mechanical Inspection System — Line Integration',
-    description: 'Engineered an opto-mechanical inspection system integrated into the production line for premium connection quality control. System enabled [100% in-line inspection], replacing offline [CMM] sampling and eliminating a production bottleneck.',
-    metrics: ['±1mm dimensional tolerance', '12-second cycle time'],
-    image_path: 'placeholder.jpg',
+    title: 'Opto-Mechanical Inspection System',
+    description: 'Engineered an opto‑mechanical inspection system integrated into the production line for quality control, enabling [100% in-line inspection] with automatic compensation for part and fixture variation, eliminating manual setup adjustments and replacing offline CMM sampling',
+    metrics: ['±1mm dimensional tolerance', '12-second cycle time','99% OEE production line'],
     stamp: 'VALIDATED',
   },
-  thermofisher_P6: {
-    title: 'E2E Technical Order Management & FAT Execution',
-    description: 'Managed end-to-end technical orders for laboratory instrument production, covering industrial requirements, process routing, and tooling definition. Executed [Factory Acceptance Tests] and drove standardisation of the documentary architecture across three product lines.',
+  tenaris_P7: {
+    title: 'From draft to release',
+    description: 'Supported product release through manufacturing NPI documentation, technical sales training, and product marketing activities',
+    metrics: [''],
+    stamp: '',
+  },
+  tenaris_P9: {
+    title: 'Major Oil Companies sustaining and claim management',
+    description: 'Supported cross-functional resolution of industrial deviations and customer field claims for a 3,000-product portfolio.',
+    metrics: ['Internal Customers NPS +20%', 'Industrial and Field waivers'],
+    stamp: '',
+  },
+
+  thermofisher_P1: {
+    title: 'Product configuration tool',
+    description: 'Developed an online self-service product configuration tool, enabling the sales team to generate quotes in real time.',
+    metrics: ['Reduced 25% of sales quoting time.'],
+    stamp: 'VALIDATED',
+  },
+  thermofisher_P3b: {
+    title: '1000+ part machinery modification',
+    description: 'Refactored a 1,000‑part machinery assembly, redesigning 30 key components to make the machinery fully parameterized across the entire product family',
+    metrics: ['Reduced Time-to-Market by 2 weeks and updated PDM documentation'],
+    stamp: 'VALIDATED',
+  },
+  thermofisher_P3c: {
+    title: 'Electrical Drawings',
+    description: 'Crafted detailed wiring diagrams for instrumentation in a dynamic weighing system',
+    metrics: [''],
+    stamp: 'VALIDATED',
+  },
+  thermofisher_P5: {
+    title: 'Factory Acceptance Test (FAT)',
+    description: 'Performed European Union Machinery Directive compliance reviews and compiled full technical and quality dossiers; led Factory Acceptance Tests (FAT) in front of the customer.',
+    metrics: ['0 out of 10 FAT failures'],
+    stamp: 'VALIDATED',
+  },
+
+  alstom_P2: {
+    title: 'Technical Bid support',
+    description: 'Supported 30+ railway infrastructure bids, leading technical solution selection, requirements compliance reviews, validation‑gap identification, and cost estimation.',
     metrics: [],
-    image_path: 'placeholder.jpg',
-    stamp: 'DOCUMENTED',
-  },
-  thermofisher_P7: {
-    title: 'eBOM → mBOM Transition & Regulatory Compliance',
-    description: 'Owned the transition from [engineering BOM] to [manufacturing BOM] for a complex electromechanical instrument family. Coordinated regulatory compliance documentation under [EU Machinery Directive] and managed internal and external technical dossiers for product release to market.',
-    metrics: [],
-    image_path: 'placeholder.jpg',
     stamp: 'VALIDATED',
   },
-  alstom_P5: {
-    title: 'Toulouse Metro Line 3 — Electrification System Validation',
-    description: 'Led cross-functional manufacturing and validation activities for the [Metro de Toulouse Line 3] urban transit electrification programme. Coordinated supplier interfaces, managed integration test schedules, and drove non-conformance resolution across mechanical and electrical subsystems.',
-    metrics: [],
-    image_path: 'placeholder.jpg',
+  alstom_P3a: {
+    title: 'Toulouse Metro L3 Design Structure Matrix',
+    description: 'Implemented a Design Structure Matrix (DSM) for the electrification subsystem to ensure cross‑discipline alignment and proactively manage technical development risk.',
+    metrics: ['Passed the critical design review gate on schedule'],
     stamp: 'VALIDATED',
   },
-  alstom_P9: {
-    title: 'ARISE / Macinino — Financial Forecasting Platform',
-    description: 'Created a [Monte Carlo]-based financial forecasting model (internally named Macinino, later formalised as [ARISE]) covering 8 financial dimensions across the Toulouse Metro Line 3 programme. Alstom created a dedicated headcount position to own the platform after departure.',
-    metrics: ['95% forecast accuracy over 12-month horizon', '8 financial dimensions modelled'],
-    image_path: 'placeholder.jpg',
+    alstom_P3b: {
+    title: 'Product non-linear mechanic optimization',
+    description: 'Performed field and laboratory data analysis to identify and correct second‑order mechanical effects impacting system performance.',
+    metrics: ['Increased factory acceptance test success rate by 30%'],
     stamp: 'VALIDATED',
   },
+  alstom_P4: {
+    title: 'Toulouse Metro L3 Electrification System Validation',
+    description: 'Led and executed cross-functional validation activities for the Toulouse Metro L3 urban project',
+    metrics: ['100% compliance with customer requirement specifications.'],
+    stamp: 'VALIDATED',
+  },
+  alstom_P6: {
+    title: 'Redesign to Cost and process improvement',
+    description: 'Performed make‑vs‑buy analysis and unlocked in‑house process capabilities to reduce production costs and leverage purchasing power.',
+    metrics: ['10% reduction in production costs'],
+    stamp: 'VALIDATED',
+  },
+  alstom_P7: {
+    title: 'Product family release for Italian market',
+    description: 'Led the technical release for the Italian market, ensuring compliance with local regulations and standards.',
+    metrics: ['Entered in the Approved Vendor List'],
+    stamp: 'VALIDATED',
+  },
+  alstom_P8: {
+    title: 'Toulouse Metro L3 First Batch Production',
+    description: 'Supported Operations and Industrialization teams during first‑batch production for the Toulouse L3 project, ensuring Six Sigma quality standards and productivity targets were met.',
+    metrics: ['First batch delivered on schedule.'],
+    stamp: 'VALIDATED',
+  },
+
+  mixot_P1: {
+    title: 'Customery Discovery',
+    description: 'Validated customer-problem fit through  60+ customer discovery interviews across European metalworking SMBs',
+    metrics: [''],
+    stamp: '',
+  },
+  mixot_P2: {
+    title: 'Problem-Solution Fit iteration',
+    description: 'Converted unstructured customer discovery into falsifiable system requirements that were prioritized, verification‑bound, and traceable to source.',
+    metrics: [''],
+    stamp: '',
+  },
+
+
+
+
+
 };
 
 // Phase visual per cell, keyed `${company_id}_${phase_code}`.
@@ -108,13 +193,15 @@ export const cellContent = {
 export const cellImages = {
   mixot_P1: '/assets/P1_MIXOT.png',
   alstom_P3a: '/assets/P3A_ALSTOM.png',
-  tenaris_P3b: '/assets/P3B_TENARIS.png',
-  thermofisher_P3c: '/assets/P3C_THERMO.png',
-  tenaris_P4: '/assets/P4_0_TENARIS.png',
-  thermofisher_P5: '/assets/P5_THERMO.png',
-  tenaris_P6: '/assets/P6_TENARIS.png',
+  alstom_P6: '/assets/P6_ALSTOM.png',
   alstom_P7: '/assets/P7_ALSTOM.png',
   alstom_P8: '/assets/P8_ALSTOM.png',
+  thermofisher_P3b: '/assets/P3B_THERMO.png',
+  thermofisher_P3c: '/assets/P3C_THERMO.png',
+  thermofisher_P5: '/assets/P5_THERMO.png',
+  tenaris_P3b: '/assets/P3B_TENARIS.png',
+  tenaris_P4: '/assets/P4_0_TENARIS.png',
+  tenaris_P6: '/assets/P6_TENARIS.png',
 };
 
 // Stub for active/partial cells without authoritative copy
