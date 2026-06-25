@@ -104,15 +104,15 @@ img { display: block; max-width: 100%; }
 /* ---------- Typography roles ---------- */
 .type-display-vertical {
   font-family: 'Inter', sans-serif;
-  font-size: 84px; font-weight: 900; line-height: 1.0; letter-spacing: -0.04em;
+  font-size: clamp(48px, 12vw, 84px); font-weight: 900; line-height: 1.0; letter-spacing: -0.04em;
 }
 .type-headline-lg {
   font-family: 'Inter', sans-serif;
-  font-size: 48px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em;
+  font-size: clamp(30px, 7vw, 48px); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em;
 }
 .type-headline-md {
   font-family: 'Inter', sans-serif;
-  font-size: 32px; font-weight: 700; line-height: 1.2;
+  font-size: clamp(23px, 5vw, 32px); font-weight: 700; line-height: 1.2;
 }
 .type-body-md {
   font-family: 'Courier Prime', monospace;
@@ -479,7 +479,7 @@ img { display: block; max-width: 100%; }
   position: relative;
   background: var(--surface);
   border: 1px solid var(--ink);
-  width: 100%; max-width: 760px; max-height: 90vh;
+  width: 100%; max-width: 760px; max-height: 90dvh;
   display: grid; grid-template-columns: 40% 60%;
   transform: scale(0.98);
   transition: transform 0.15s ease-out;
@@ -527,10 +527,31 @@ img { display: block; max-width: 100%; }
 }
 
 @media (max-width: 768px) {
-  .type-headline-lg { font-size: 34px; }
-  .banner { flex-direction: column; align-items: flex-start; gap: 0.85rem; padding: 1rem 1.25rem; }
-  .banner__nav { gap: 1.25rem; }
-  .section__content, .matrix-section, .video-section, .footer { padding-left: 1.25rem; padding-right: 1.25rem; }
+  /* Sticky header: clear the Dynamic Island / status bar, fold side safe-area
+     insets into the horizontal padding for landscape rounded corners. */
+  .banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding:
+      max(1rem, env(safe-area-inset-top)) max(1.25rem, env(safe-area-inset-right))
+      1rem max(1.25rem, env(safe-area-inset-left));
+  }
+  .banner__nav { flex-wrap: wrap; gap: 0.5rem 1.25rem; width: 100%; }
+  /* 44x44 minimum touch targets (Apple HIG). */
+  .banner__title { display: inline-flex; align-items: center; min-height: 44px; }
+  .banner__link { min-height: 44px; }
+  .banner__cta { display: inline-flex; align-items: center; min-height: 44px; }
+
+  /* Full-width sections: fold side safe-area insets into horizontal padding. */
+  .section__content,
+  .matrix-section,
+  .video-section,
+  .footer {
+    padding-left: max(1.25rem, env(safe-area-inset-left));
+    padding-right: max(1.25rem, env(safe-area-inset-right));
+  }
+  .footer { padding-bottom: max(2.5rem, env(safe-area-inset-bottom)); }
 
   .rail-layout { grid-template-columns: 1fr; }
   .rail {
@@ -538,34 +559,60 @@ img { display: block; max-width: 100%; }
     text-align: left;
   }
   .rail__label {
-    position: static; margin: 0; padding: 1rem 1.25rem;
+    position: static; margin: 0;
+    padding: 1rem max(1.25rem, env(safe-area-inset-left));
     writing-mode: horizontal-tb; transform: none; font-size: 20px;
   }
   .hero {
     grid-template-columns: 1fr;
     gap: 2rem;
-    padding: 1.5rem 1.25rem;
+    padding: 1.5rem max(1.25rem, env(safe-area-inset-right)) 1.5rem max(1.25rem, env(safe-area-inset-left));
   }
+  /* Left-align body copy on narrow screens — justification creates rivers. */
+  .bio__text { text-align: left; }
   .stats {
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 2rem 2.5rem;
+    gap: 1.75rem 2.5rem;
     border-left: none;
     border-top: 1px solid var(--rule-light);
     padding-left: 0;
     padding-top: 1.5rem;
   }
+  .stat { flex: 1 1 30%; min-width: 96px; }
 
+  /* Matrix stays a real table but scrolls inside its own container so it never
+     forces the whole page sideways. */
+  .matrix-scroll { -webkit-overflow-scrolling: touch; }
   .m-company h3 { font-size: 18px; }
   .matrix { grid-template-columns: 130px repeat(4, minmax(72px, 1fr)); min-width: 500px; }
 
   .modal {
     grid-template-columns: 1fr;
     position: fixed; left: 0; right: 0; bottom: 0;
-    max-width: none; max-height: 90vh;
+    max-width: none; max-height: 90dvh;
     transform: none;
   }
   .overlay { padding: 0; align-items: flex-end; }
   .overlay.is-open .modal { transform: none; }
   .modal__image { border-right: none; border-bottom: 1px solid var(--rule-light); min-height: 200px; }
+  /* Keep the bottom-sheet content clear of the home indicator. */
+  .modal__content { padding-bottom: max(2.5rem, env(safe-area-inset-bottom)); }
+}
+
+/* ---- Phone polish: iPhone 15/16/17 family (~390–440px CSS px) ---- */
+@media (max-width: 480px) {
+  .matrix-head { margin-bottom: 1.5rem; }
+  /* Tighten the matrix so it fits more comfortably while keeping cells >=44px
+     wide for touch; still scrolls within .matrix-scroll on the narrowest phones. */
+  .matrix { grid-template-columns: 116px repeat(4, minmax(64px, 1fr)); min-width: 440px; }
+  .m-phasehead { padding: 0.75rem 0.75rem 0.75rem 1rem; }
+  .cell { min-height: 56px; }
+
+  .stats { gap: 1.5rem 1.25rem; }
+  .stat { flex: 1 1 0; min-width: 0; }
+
+  .video-section,
+  .matrix-section { padding-top: 2rem; padding-bottom: 2rem; }
+  .hero { gap: 1.5rem; }
 }
