@@ -1,7 +1,30 @@
 ---
-import { phases, companies, statusMap } from '../data/matrixData.js';
+import { phases, companies, statusMap, getCell } from '../data/matrixData.js';
 
 const marker = { active: '●', partial: '◐' };
+const phaseLabel = Object.fromEntries(phases.map((p) => [p.code, p.label]));
+
+// Server-rendered details for every interactive cell. The modal injects this
+// same copy via JS on click; rendering it statically (visually hidden) makes it
+// readable by non-JS crawlers and AI agents without altering the visual UX.
+const cellDetails = [];
+for (const c of companies) {
+  for (const p of phases) {
+    const status = statusMap[c.id][p.code];
+    if (status === 'inactive') continue;
+    const cell = getCell(c.id, p.code);
+    if (!cell.title) continue;
+    cellDetails.push({
+      company: c.name,
+      phase: p.code,
+      phaseLabel: phaseLabel[p.code],
+      status,
+      title: cell.title,
+      description: cell.description,
+      metrics: (cell.metrics || []).filter(Boolean),
+    });
+  }
+}
 ---
 
 <section class="matrix-section" id="lifecycle-matrix">
@@ -62,5 +85,22 @@ const marker = { active: '●', partial: '◐' };
     <div class="legend__row"><span class="legend__mark">[●]</span><span class="type-body-sm">ACTIVE — direct project ownership</span></div>
     <div class="legend__row"><span class="legend__mark legend__mark--partial">[◐]</span><span class="type-body-sm">PARTIAL — adjacent or support role</span></div>
     <div class="legend__row"><span class="legend__mark legend__mark--inactive">[&nbsp;]</span><span class="type-body-sm">INACTIVE — not covered</span></div>
+  </div>
+
+  <!-- Static, visually-hidden transcript of every interactive cell's detail.
+       Mirrors the modal copy so non-JS crawlers and AI agents can read it. -->
+  <div class="sr-only">
+    <h3>Engineering lifecycle matrix — project details</h3>
+    {cellDetails.map((d) => (
+      <article>
+        <h4>{d.company} — {d.phase} {d.phaseLabel} ({d.status}): {d.title}</h4>
+        <p>{d.description}</p>
+        {d.metrics.length > 0 && (
+          <ul>
+            {d.metrics.map((m) => <li>{m}</li>)}
+          </ul>
+        )}
+      </article>
+    ))}
   </div>
 </section>

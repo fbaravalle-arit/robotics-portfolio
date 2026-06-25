@@ -13,6 +13,32 @@ const {
 
 const ogImage = new URL('/assets/og-image.png', Astro.site ?? Astro.url).href;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
+const siteUrl = (Astro.site ?? Astro.url).origin;
+
+// Person structured data (JSON-LD). Rendered into the static HTML so AI agents
+// and crawlers can read it without executing JavaScript.
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Federico Baravalle',
+  jobTitle: 'TPM in Physical AI & Robotics / Senior Mechanical Engineer',
+  description:
+    'Technical Program Manager in Physical AI and Robotics, and Senior Mechanical Engineer with 6+ years in electromechanical systems, delivering projects up to $10M+ in scope with VP-level reporting and covering 8 of 10 engineering systems life cycle phases.',
+  url: siteUrl,
+  email: 'mailto:baravalle.fede@gmail.com',
+  nationality: ['Italian', 'Argentinian'],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Atlanta',
+    addressRegion: 'GA',
+    addressCountry: 'US',
+  },
+  sameAs: [
+    'https://www.linkedin.com/in/federico-baravalle/',
+    'https://github.com/fbaravalle-arit',
+    'https://www.mixot.eu/',
+  ],
+};
 ---
 
 <!doctype html>
@@ -38,6 +64,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+
+    <!-- Structured data: Person (JSON-LD, server-rendered) -->
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
   </head>
   <body>
     <slot />
