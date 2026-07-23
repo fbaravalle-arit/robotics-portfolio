@@ -43,7 +43,7 @@ export const statusMap = {
     P7: 'inactive', P8: 'inactive', P9: 'inactive', P10: 'inactive',
   },
   alstom: {
-    P1:'inactive', P2: 'active', P3a: 'active', P3b: 'active',
+    P1: 'inactive', P2: 'active', P3a: 'active', P3b: 'active',
     P3c: 'inactive', P4: 'partial', P5: 'inactive', P6: 'partial',
     P7: 'active', P8: 'active', P9: 'inactive', P10: 'inactive',
   },
@@ -77,14 +77,14 @@ export const cellContent = {
   },
   tenaris_P4: {
     title: 'Full-Scale Testing',
-    description: 'Designed and executed a validation program, including [DOE] planning, sample manufacturing coordination, and 1-week test, on a simulated oil rig, with a 8 members rig crew (see above figure) with negative results.',
+    description: 'Designed and executed a validation program, including [DOE] planning, sample manufacturing coordination, and 1-week test, on a simulated oil rig, with an 8-member rig crew with negative results.',
     metrics: ['Detailed failure analysis and development process room for improvement guidelines.'],
     stamp: 'VALIDATED',
   },
   tenaris_P6: {
     title: 'Opto-Mechanical Inspection System',
     description: 'Engineered an opto‑mechanical inspection system integrated into the production line for quality control, enabling [100% in-line inspection] with automatic compensation for part and fixture variation, eliminating manual setup adjustments and replacing offline CMM sampling',
-    metrics: ['±1mm dimensional tolerance', '12-second cycle time','99% OEE production line'],
+    metrics: ['±1mm dimensional tolerance', '12-second cycle time', '99% OEE production line'],
     stamp: 'VALIDATED',
   },
   tenaris_P7: {
@@ -121,7 +121,7 @@ export const cellContent = {
   thermofisher_P5: {
     title: 'Factory Acceptance Test (FAT)',
     description: 'Performed European Union Machinery Directive compliance reviews and compiled full technical and quality dossiers; led Factory Acceptance Tests (FAT) in front of the customer.',
-    metrics: ['0 out of 10 FAT failures'],
+    metrics: ['10/10 FATs passed, zero failures'],
     stamp: 'VALIDATED',
   },
 
@@ -137,7 +137,7 @@ export const cellContent = {
     metrics: ['Passed the critical design review gate on schedule'],
     stamp: 'VALIDATED',
   },
-    alstom_P3b: {
+  alstom_P3b: {
     title: 'Product non-linear mechanic optimization',
     description: 'Performed field and laboratory data analysis to identify and correct second‑order mechanical effects impacting system performance.',
     metrics: ['Increased factory acceptance test success rate by 30%'],
@@ -169,7 +169,7 @@ export const cellContent = {
   },
 
   mixot_P1: {
-    title: 'Customery Discovery',
+    title: 'Customer Discovery',
     description: 'Validated customer-problem fit through  60+ customer discovery interviews across European metalworking SMBs',
     metrics: [''],
     stamp: '',
