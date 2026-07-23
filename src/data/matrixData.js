@@ -28,7 +28,7 @@ export const companies = [
 // Authoritative state grid (status per company × phase)
 export const statusMap = {
   mixot: {
-    P1: 'active', P2: 'active', P3a: 'inactive', P3b: 'inactive',
+    P1: 'active', P2: 'partial', P3a: 'inactive', P3b: 'inactive',
     P3c: 'inactive', P4: 'inactive', P5: 'inactive', P6: 'inactive',
     P7: 'inactive', P8: 'inactive', P9: 'inactive', P10: 'inactive',
   },
@@ -172,7 +172,7 @@ export const cellContent = {
     title: 'Customer Discovery',
     description: 'Validated customer-problem fit through  60+ customer discovery interviews across European metalworking SMBs',
     metrics: [''],
-    stamp: '',
+    stamp: 'VALIDATED',
   },
   mixot_P2: {
     title: 'Problem-Solution Fit iteration',
